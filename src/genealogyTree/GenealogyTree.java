@@ -1,8 +1,7 @@
 package genealogyTree;
 
-/**
- * Created by Виталий on 4/3/2015.
- */
+import java.util.Collection;
+
 public class GenealogyTree {
-    private java.util.Collection<Entity> leafs;
+    private Collection<Entity> leafs;
 }

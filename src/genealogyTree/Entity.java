@@ -1,19 +1,27 @@
 package genealogyTree;
 
+import com.sun.istack.internal.NotNull;
+
 import java.awt.*;
 import java.util.Collection;
 import java.util.Date;
 
-/**
- * Created by Виталий on 4/3/2015.
- */
-public class Entity {
+public class Entity implements Comparable<Entity> {
     private FullName fullName;
-    private java.util.Date birthDay;
+    private Date birthDay;
     private boolean isAlive;
-    private java.util.Date deathDay;
-    private java.util.Collection<Entity> parents;
-    private java.util.Collection<Entity> children;
+    private Date deathDay;
+    private Collection<Entity> parents;
+    private Collection<Entity> children;
+    private Image photo;
+    private String shortInfo;
+    private Boolean sex;
+
+    public Entity() {
+        super();
+    }
+
+    public Entity(FullName fullName, Date birthDay, boolean isAlive, Date deathDay, Collection<Entity> parents, Collection<Entity> children, Image photo, String shortInfo, boolean sex) {}
 
     public FullName getFullName() {
         return fullName;
@@ -59,13 +67,6 @@ public class Entity {
         return sex;
     }
 
-    private java.awt.Image photo;
-    private String shortInfo;
-    private Boolean sex;
-
-    public Entity(FullName fullName, Date birthDay, boolean isAlive, Date deathDay, Collection<Entity> parents, Collection<Entity> children, Image photo, String shortInfo, boolean sex) {
-    }
-
     public void changeName(FullName newName) {
     }
 
@@ -73,5 +74,10 @@ public class Entity {
     }
 
     public void addChild(Entity child) {
+    }
+
+    //Some warning here while commiting.
+    public int compareTo(Entity other) {
+        return 0;
     }
 }
