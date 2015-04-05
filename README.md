@@ -17,4 +17,4 @@
 
 ### UML-diagram
 
-![Місце для діаграми класів. Краще я б не робив цього опису.](http://i.imgur.com/4aujgqt.png)
+![Місце для діаграми класів. Краще я б не робив цього опису. PORT BLOODBORNE ON PC FFS!!!](http://i.imgur.com/4aujgqt.png)
