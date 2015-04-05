@@ -8,13 +8,17 @@ import java.util.Date;
 
 public class Entity implements Comparable<Entity> {
     private FullName fullName;
+    
     private Date birthDay;
     private boolean isAlive;
     private Date deathDay;
+    
     private Collection<Entity> parents;
     private Collection<Entity> children;
+    
     private Image photo;
     private String shortInfo;
+
     private Boolean sex;
 
     public Entity() {
@@ -63,7 +67,7 @@ public class Entity implements Comparable<Entity> {
         return shortInfo;
     }
 
-    public Boolean isSex() {
+    public Boolean getSex() {
         return sex;
     }
 
