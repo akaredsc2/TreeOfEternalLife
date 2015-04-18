@@ -1,54 +1,30 @@
 package genealogyTree;
 
-import com.sun.istack.internal.NotNull;
-
-import java.awt.*;
 import java.util.Collection;
-import java.util.Date;
+import java.util.LinkedList;
 
 public class Entity implements Comparable<Entity> {
     private FullName fullName;
-    
-    private Date birthDay;
-    private boolean isAlive;
-    private Date deathDay;
-    
+
+    private LifeTime lifeTime;
+
     private Collection<Entity> parents;
     private Collection<Entity> children;
-    
-    private Image photo;
-    private String shortInfo;
 
-    private Boolean sex;
+    private AdditionalInfo info;
 
     public Entity() {
-        super();
+        this.parents = new LinkedList<>();
+        this.children = new LinkedList<>();
     }
 
-    public Entity(FullName fullName, Date birthDay, boolean isAlive, Date deathDay, Collection<Entity> parents, Collection<Entity> children, Image photo, String shortInfo, boolean sex) {}
-
-    public FullName getFullName() {
-        return fullName;
-    }
-
-    public Date getBirthDay() {
-        return birthDay;
-    }
-
-    public void setPhoto(Image photo) {
-        this.photo = photo;
-    }
-
-    public void setShortInfo(String shortInfo) {
-        this.shortInfo = shortInfo;
-    }
-
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public Date getDeathDay() {
-        return deathDay;
+    public Entity(FullName fullName, LifeTime lifeTime, Collection<Entity> parents, Collection<Entity> children, AdditionalInfo info) {
+        this();
+        this.fullName = fullName;
+        this.lifeTime = lifeTime;
+        this.parents = parents;
+        this.children = children;
+        this.info = info;
     }
 
     public Collection<Entity> getParents() {
@@ -59,29 +35,24 @@ public class Entity implements Comparable<Entity> {
         return children;
     }
 
-    public Image getPhoto() {
-        return photo;
-    }
-
-    public String getShortInfo() {
-        return shortInfo;
-    }
-
-    public Boolean getSex() {
-        return sex;
-    }
-
-    public void changeName(FullName newName) {
-    }
-
-    public void endLife(Date deathDay) {
-    }
-
     public void addChild(Entity child) {
+        this.children.add(child);
     }
 
     //Some warning here while commiting.
     public int compareTo(Entity other) {
         return 0;
+    }
+
+    public void addParent(Entity parent) {
+        this.parents.add(parent);
+    }
+
+    public boolean hasParent(Entity parent) {
+        return getParents().contains(parent);
+    }
+
+    public boolean hasChild(Entity child) {
+        return getChildren().contains(child);
     }
 }
