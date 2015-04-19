@@ -1,13 +1,14 @@
 package manage;
 
 import genealogyTree.*;
-import javafx.scene.image.Image;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
 public class HardcodedEntityCreator {
+
+
     public Entity create1() {
         //retrieve info from web form
 
