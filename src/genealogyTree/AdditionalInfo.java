@@ -1,16 +1,26 @@
 package genealogyTree;
 
-/**
- * Created by Виталий on 4/18/2015.
- */
 public class AdditionalInfo {
-    private String photo; // just for easy hardcoding. Will be remade in lab 3, i assure you!
+    private String photoURL;
     private String shortInfo;
     private Sex sex;
 
-    public AdditionalInfo(String photo, String shortInfo, Sex sex) {
-        this.photo = photo;
+    @Override
+    public String toString() {
+        return "AdditionalInfo{" +
+                "photoURL='" + photoURL + '\'' +
+                ", shortInfo='" + shortInfo + '\'' +
+                ", sex=" + sex +
+                '}';
+    }
+
+    public AdditionalInfo(String photoURL, String shortInfo, Sex sex) {
+        this.photoURL = photoURL;
         this.shortInfo = shortInfo;
         this.sex = sex;
+    }
+
+    public Sex getSex() {
+        return sex;
     }
 }

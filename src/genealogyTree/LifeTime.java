@@ -20,4 +20,16 @@ public class LifeTime {
         this.birthday = birthday;
         this.deathday = deathday;
     }
+
+    @Override
+    public String toString() {
+        return "LifeTime{" +
+                "isAlive=" + isAlive +
+                ", birthday=" + birthday +
+                ", deathday=" + deathday +
+                '}';
+    }
+    public long getBirthday() {
+        return birthday.getTime();
+    }
 }

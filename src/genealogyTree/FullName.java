@@ -39,4 +39,13 @@ public class FullName {
 
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "FullName{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", secondName='" + secondName + '\'' +
+                '}';
+    }
 }

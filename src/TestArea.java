@@ -1,16 +1,26 @@
+import exceptions.RelativesException;
 import genealogyTree.Entity;
 import manage.HardcodedEntityCreator;
 
 public class TestArea {
     public static void main(String[] args) {
-        HardcodedEntityCreator creator = new HardcodedEntityCreator();
+        HardcodedEntityCreator hard = new HardcodedEntityCreator();
+        Entity subject = hard.create();
 
-        Entity vitaly = creator.create1();
-        Entity alice = creator.create2();
-        Entity victor = creator.create3();
-        Entity denis = creator.create4();
-        Entity tatjana = creator.create5();
+        //TODO Handle standard exception
+        //TODO Refactor THA FUC out of it
+        //TODO Unit-tests may be?
 
-        //Some weird stuff here!
+        for (int i = 0; i < 10; i++) {
+            try {
+                if (hard.hasNext()) {
+                    subject.addChild(hard.create());
+                } else {
+                    System.out.println("[FAILED] No new entities");
+                }
+            } catch (RelativesException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }
