@@ -20,6 +20,67 @@ public class Entity implements Comparable<Entity> {
         this.children = new LinkedList<>();
     }
 
+    public Entity(FullName fullName, LifeTime lifeTime, Collection<Entity> parents, Collection<Entity> children, AdditionalInfo info) {
+        this();
+        this.fullName = fullName;
+        this.lifeTime = lifeTime;
+        this.parents = parents;
+        this.children = children;
+        this.info = info;
+    }
+
+    public Collection<Entity> getChildren() {
+        return children;
+    }
+
+    public Collection<Entity> getParents() {
+        return parents;
+    }
+
+    //TODO Advanced comparing e.g. different families can't have same children
+    public void addChild(Entity child) throws RelativesException {
+        if (this.equals(child)) {
+            throw new RelativesException("A person can't be child to itself!");
+        }
+        if (this.compareTo(child) < 0) {
+            throw new RelativesException("Child is older or same age as parent!");
+        }
+        if (this.children.contains(child)) {
+            throw new RelativesException("Already in children list!");
+        }
+        this.children.add(child);
+        System.out.println("Added new child!");
+    }
+
+    public void addParent(Entity parent) throws RelativesException {
+        if (this.equals(parent)) {
+            throw new RelativesException("A person can't be parent to itself!");
+        }
+        if (this.parents.size() >= 2) {
+            throw new RelativesException("This person already has 2 parents!");
+        } else if (!this.parents.isEmpty() && this.parents.iterator().next().info.getSex() == parent.info.getSex()) {
+            throw new RelativesException("WE ARE NOT TOLERANT!");
+        } else if (this.compareTo(parent) >= 0 ) {
+            throw new RelativesException("Parent is younger than child!");
+        }
+        this.parents.add(parent);
+        System.out.println("Added new parent!");
+    }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) return true;
+        if (otherObject == null) return false;
+        if (this.getClass() != otherObject.getClass()) return false;
+
+        Entity other = (Entity) otherObject;
+
+        return this.fullName.equals(other.fullName)
+                && this.lifeTime.equals(other.lifeTime)
+                && this.parents.equals(other.parents)
+                && this.children.equals(other.children);
+    }
+
     @Override
     public String toString() {
         return "Entity{" +
@@ -31,34 +92,13 @@ public class Entity implements Comparable<Entity> {
                 '}';
     }
 
-    public Entity(FullName fullName, LifeTime lifeTime, Collection<Entity> parents, Collection<Entity> children, AdditionalInfo info) {
-        this();
-        this.fullName = fullName;
-        this.lifeTime = lifeTime;
-        this.parents = parents;
-        this.children = children;
-        this.info = info;
-    }
-
-    public void addChild(Entity child) throws RelativesException {
-        if(child.lifeTime.getBirthday() > this.lifeTime.getBirthday()) {
-            throw new RelativesException("[CUSTOMEXCEPTION]Child is older than parent!");
-        }
-        this.children.add(child);
-    }
-
+    @Override
     public int compareTo(Entity other) {
-        return 0;
-    }
-
-    public void addParent(Entity parent) throws RelativesException {
-        if(this.parents.size() >= 2) {
-            throw new RelativesException("[CUSTOMEXCEPTION]Current entity already has 2 parents!");
-        } else if(!this.parents.isEmpty() && this.parents.iterator().next().info.getSex() == parent.info.getSex()) {
-            throw new RelativesException("[CUSTOMEXCEPTION]WE ARE NOT TOLERANT!");
-        } else if(this.lifeTime.getBirthday() > parent.lifeTime.getBirthday()) {
-            throw new RelativesException("[CUSTOMEXCEPTION]Parent is younger than child!");
-        }
-        this.parents.add(parent);
+        // Birthday of this is earlier than others => this is older
+        if (this.lifeTime.getBirthday() < other.lifeTime.getBirthday()) {
+            return 1;
+        } else if (this.lifeTime.getBirthday() == other.lifeTime.getBirthday()){
+            return 0;
+        } else return -1;
     }
 }

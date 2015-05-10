@@ -1,8 +1,5 @@
 package genealogyTree;
 
-/**
- * Created by Виталий on 4/3/2015.
- */
 public class FullName {
     private String name;
     private String surname;
@@ -47,5 +44,16 @@ public class FullName {
                 ", surname='" + surname + '\'' +
                 ", secondName='" + secondName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) return true;
+        if (otherObject == null) return false;
+        if (this.getClass() != otherObject.getClass()) return false;
+
+        FullName other = (FullName) otherObject;
+
+        return this.name.equals(other.name) && this.surname.equals(other.surname) && this.surname.equals(other.surname);
     }
 }
