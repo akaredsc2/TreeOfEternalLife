@@ -1,7 +1,15 @@
 package genealogyTree;
 
-import java.util.Collection;
+import java.util.LinkedList;
 
 public class GenealogyTree {
-    private Collection<Entity> leafs;
+    private LinkedList<Entity> leafs;
+
+    public GenealogyTree() {
+        this.leafs = new LinkedList<>();
+    }
+
+    public void add(Entity e) {
+        this.leafs.add(e);
+    }
 }

@@ -1,5 +1,7 @@
 package genealogyTree;
 
+import exceptions.RelativesException;
+
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -27,32 +29,76 @@ public class Entity implements Comparable<Entity> {
         this.info = info;
     }
 
-    public Collection<Entity> getParents() {
-        return parents;
-    }
-
     public Collection<Entity> getChildren() {
         return children;
     }
 
-    public void addChild(Entity child) {
+    public Collection<Entity> getParents() {
+        return parents;
+    }
+
+    //TODO Advanced comparing e.g. different families can't have same children
+    public void addChild(Entity child) throws RelativesException {
+        if (this.equals(child)) {
+            throw new RelativesException("A person can't be child to itself!");
+        }
+        if (this.compareTo(child) < 0) {
+            throw new RelativesException("Child is older or same age as parent!");
+        }
+        if (this.children.contains(child)) {
+            throw new RelativesException("Already in children list!");
+        }
         this.children.add(child);
+        System.out.println("Added new child!");
     }
 
-    //Some warning here while commiting.
-    public int compareTo(Entity other) {
-        return 0;
-    }
-
-    public void addParent(Entity parent) {
+    public void addParent(Entity parent) throws RelativesException {
+        if (this.equals(parent)) {
+            throw new RelativesException("A person can't be parent to itself!");
+        }
+        if (this.parents.size() >= 2) {
+            throw new RelativesException("This person already has 2 parents!");
+        } else if (!this.parents.isEmpty() && this.parents.iterator().next().info.getSex() == parent.info.getSex()) {
+            throw new RelativesException("WE ARE NOT TOLERANT!");
+        } else if (this.compareTo(parent) >= 0 ) {
+            throw new RelativesException("Parent is younger than child!");
+        }
         this.parents.add(parent);
+        System.out.println("Added new parent!");
     }
 
-    public boolean hasParent(Entity parent) {
-        return getParents().contains(parent);
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) return true;
+        if (otherObject == null) return false;
+        if (this.getClass() != otherObject.getClass()) return false;
+
+        Entity other = (Entity) otherObject;
+
+        return this.fullName.equals(other.fullName)
+                && this.lifeTime.equals(other.lifeTime)
+                && this.parents.equals(other.parents)
+                && this.children.equals(other.children);
     }
 
-    public boolean hasChild(Entity child) {
-        return getChildren().contains(child);
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "fullName=" + fullName +
+                ", lifeTime=" + lifeTime +
+                ", parents=" + parents +
+                ", children=" + children +
+                ", info=" + info +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Entity other) {
+        // Birthday of this is earlier than others => this is older
+        if (this.lifeTime.getBirthday() < other.lifeTime.getBirthday()) {
+            return 1;
+        } else if (this.lifeTime.getBirthday() == other.lifeTime.getBirthday()){
+            return 0;
+        } else return -1;
     }
 }
