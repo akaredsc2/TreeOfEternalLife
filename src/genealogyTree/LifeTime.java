@@ -10,22 +10,13 @@ public class LifeTime {
     public LifeTime(Date birthday) {
         isAlive = true;
         this.birthday = birthday;
-        this.dayOfDeath = new Date(0);
+        this.dayOfDeath = new Date(Long.MAX_VALUE - 1);
     }
 
     public LifeTime(Date birthday, Date dayOfDeath) {
         isAlive = false;
         this.birthday = birthday;
         this.dayOfDeath = dayOfDeath;
-    }
-
-    @Override
-    public String toString() {
-        return "LifeTime{" +
-                "isAlive=" + isAlive +
-                ", birthday=" + birthday +
-                ", dayOfDeath=" + dayOfDeath +
-                '}';
     }
 
     @Override
@@ -41,5 +32,13 @@ public class LifeTime {
 
     public long getBirthday() {
         return birthday.getTime();
+    }
+
+    public long getDayOfDeath() {
+        return dayOfDeath.getTime();
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 }

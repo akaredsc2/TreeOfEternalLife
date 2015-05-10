@@ -37,6 +37,16 @@ public class Entity implements Comparable<Entity> {
         return parents;
     }
 
+    public long getBirthday() {
+        return lifeTime.getBirthday();
+    }
+
+    public long getDayOfDeath() { return lifeTime.getDayOfDeath(); }
+
+    public boolean isAlive() {
+        return lifeTime.isAlive();
+    }
+
     //TODO Advanced comparing e.g. different families can't have same children
     public void addChild(Entity child) throws RelativesException {
         if (this.equals(child)) {
@@ -79,17 +89,6 @@ public class Entity implements Comparable<Entity> {
                 && this.lifeTime.equals(other.lifeTime)
                 && this.parents.equals(other.parents)
                 && this.children.equals(other.children);
-    }
-
-    @Override
-    public String toString() {
-        return "Entity{" +
-                "fullName=" + fullName +
-                ", lifeTime=" + lifeTime +
-                ", parents=" + parents +
-                ", children=" + children +
-                ", info=" + info +
-                '}';
     }
 
     @Override

@@ -11,15 +11,6 @@ public class AdditionalInfo {
         this.sex = sex;
     }
 
-    @Override
-    public String toString() {
-        return "AdditionalInfo{\n" +
-                "\tphotoURL='\n" + photoURL + '\'' +
-                "\t, shortInfo='\n" + shortInfo + '\'' +
-                "\t, sex=\n" + sex +
-                '}';
-    }
-
     public Sex getSex() {
         return sex;
     }

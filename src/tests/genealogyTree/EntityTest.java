@@ -1,6 +1,7 @@
 package genealogyTree;
 
 import exceptions.RelativesException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,12 +28,15 @@ public class EntityTest {
 
     @Test
     public void testCompareTo() throws Exception {
+        System.out.println("testCompareTo");
         assertEquals(-1, entities.get(0).compareTo(entities.get(1)));
         assertEquals(1, entities.get(1).compareTo(entities.get(0)));
+        System.out.println("---");
     }
 
     @Test
     public void testEquals() throws Exception {
+        System.out.println("testEquals");
         assertFalse(entities.get(0).equals(entities.get(1)));
         assertFalse(entities.get(1).equals(entities.get(0)));
 
@@ -41,20 +45,25 @@ public class EntityTest {
 
         assertFalse(entities.get(2).equals(entities.get(3)));
         assertFalse(entities.get(3).equals(entities.get(2)));
+        System.out.println("---");
     }
 
     @Test
     public void testAddChild() throws Exception {
+        System.out.println("testAddChild");
         addChildToParent(entities.get(0), entities.get(1));
         addChildToParent(entities.get(2), entities.get(1));
         addChildToParent(entities.get(3), entities.get(1));
+        System.out.println("---");
     }
 
     @Test
     public void testAddParent() throws Exception {
+        System.out.println("testAddParent");
         for (int i = 1; i < entities.size(); i++) {
             addParentToChild(entities.get(i), entities.get(0));
         }
+        System.out.println("---");
     }
 
     public void addParentToChild(Entity parent, Entity child) {
