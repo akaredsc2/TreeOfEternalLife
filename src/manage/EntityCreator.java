@@ -3,7 +3,7 @@ package manage;
 import genealogyTree.Entity;
 
 public class EntityCreator {
-    //TODO REDO IT ALL
+    //TODO Interface
     public Entity create() {
         try {
             //retrieve data from web form

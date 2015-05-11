@@ -9,8 +9,13 @@ import java.util.Queue;
 public class HardcodedEntityCreator extends EntityCreator {
     private Queue<Entity> entities  ;
 
+    //TODO make it access database
+    //auth from servlet or something
+    //java ee tutorial servlets
+
     public HardcodedEntityCreator() {
         this.entities = new LinkedList<>();
+
         entities.add(new Entity(new FullName("Vitaly", "Sharapov"), new LifeTime(new Date(1995)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
         entities.add(new Entity(new FullName("Denis", "Sharapov"), new LifeTime(new Date(1983)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-4.jpg", "Not really", Sex.MALE)));
         entities.add(new Entity(new FullName("Victor", "Sharapov"), new LifeTime(new Date(1964)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-2.jpg", "50 years old ex-military man", Sex.MALE)));
