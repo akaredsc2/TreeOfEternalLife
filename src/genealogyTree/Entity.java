@@ -3,6 +3,7 @@ package genealogyTree;
 import exceptions.RelativesException;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
 public class Entity implements Comparable<Entity> {
@@ -37,14 +38,8 @@ public class Entity implements Comparable<Entity> {
         return parents;
     }
 
-    public long getBirthday() {
-        return lifeTime.getBirthday();
-    }
-
-    public long getDayOfDeath() { return lifeTime.getDayOfDeath(); }
-
-    public boolean isAlive() {
-        return lifeTime.isAlive();
+    public LifeTime getLifeTime() {
+        return lifeTime;
     }
 
     //TODO Advanced comparing e.g. different families can't have same children
@@ -52,14 +47,13 @@ public class Entity implements Comparable<Entity> {
         if (this.equals(child)) {
             throw new RelativesException("A person can't be child to itself!");
         }
-        if (this.compareTo(child) < 0) {
+        if (this.compareTo(child) > 0) {
             throw new RelativesException("Child is older or same age as parent!");
         }
         if (this.children.contains(child)) {
             throw new RelativesException("Already in children list!");
         }
         this.children.add(child);
-        System.out.println("Added new child!");
     }
 
     public void addParent(Entity parent) throws RelativesException {
@@ -70,11 +64,10 @@ public class Entity implements Comparable<Entity> {
             throw new RelativesException("This person already has 2 parents!");
         } else if (!this.parents.isEmpty() && this.parents.iterator().next().info.getSex() == parent.info.getSex()) {
             throw new RelativesException("WE ARE NOT TOLERANT!");
-        } else if (this.compareTo(parent) >= 0 ) {
+        } else if (this.compareTo(parent) <= 0 ) {
             throw new RelativesException("Parent is younger than child!");
         }
         this.parents.add(parent);
-        System.out.println("Added new parent!");
     }
 
     @Override
@@ -93,11 +86,6 @@ public class Entity implements Comparable<Entity> {
 
     @Override
     public int compareTo(Entity other) {
-        // Birthday of this is earlier than others => this is older
-        if (this.lifeTime.getBirthday() < other.lifeTime.getBirthday()) {
-            return 1;
-        } else if (this.lifeTime.getBirthday() == other.lifeTime.getBirthday()){
-            return 0;
-        } else return -1;
+        return this.lifeTime.getBirthday().compareTo(other.lifeTime.getBirthday());
     }
 }
