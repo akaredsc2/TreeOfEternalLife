@@ -10,6 +10,6 @@ public class RelativesException extends Exception {
 
     @Override
     public String getMessage() {
-        return "[CUSTOMEXCEPTION]" + super.getMessage();
+        return "[CUSTOM_EXCEPTION]" + super.getMessage();
     }
 }

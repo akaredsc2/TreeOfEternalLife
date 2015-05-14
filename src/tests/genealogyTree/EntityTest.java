@@ -5,82 +5,80 @@ import exceptions.RelativesException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
+import java.util.TreeMap;
 
 import static org.junit.Assert.*;
 
 public class EntityTest {
-    private ArrayList<Entity> entities;
+    private TreeMap<String, Entity> entities;
 
     @Before
     public void setUp() throws Exception {
-        entities = new ArrayList<>();
+        entities = new TreeMap<>();
 
-        entities.add(new Entity(new FullName("Vitaly", "Sharapov"), new LifeTime(new Date(1995)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
-        entities.add(new Entity(new FullName("Denis", "Sharapov"), new LifeTime(new Date(1983)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-4.jpg", "Not really", Sex.MALE)));
-        entities.add(new Entity(new FullName("Vitaly", "Sharapov"), new LifeTime(new Date(1995)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
-        entities.add(new Entity(new FullName("Vitaly", "Sharapoff"), new LifeTime(new Date(1995)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
-        entities.add(new Entity(new FullName("Tatajna", "Sharapova"), new LifeTime(new Date(1965)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-5.jpg", "Nurse", Sex.FEMALE)));
-        entities.add(new Entity(new FullName("Victor", "Sharapov"), new LifeTime(new Date(1964)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-2.jpg", "50 years old ex-military man", Sex.MALE)));
+        entities.put("Vitaly1", new Entity(new FullName("Vitaly", "Sharapov"), new LifeTime(new GregorianCalendar(1995, 8, 1)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
+        entities.put("Denis", new Entity(new FullName("Denis", "Sharapov"), new LifeTime(new GregorianCalendar(1983, 5, 19)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-4.jpg", "Not really", Sex.MALE)));
+        entities.put("Vitaly2", new Entity(new FullName("Vitaly", "Sharapov"), new LifeTime(new GregorianCalendar(1995, 8, 1)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
+        entities.put("Vitaly3", new Entity(new FullName("Vitaly", "Sharapoff"), new LifeTime(new GregorianCalendar(1995, 8, 1)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
+        entities.put("Tatjana", new Entity(new FullName("Tatjana", "Sharapova"), new LifeTime(new GregorianCalendar(1963, 3, 8)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-5.jpg", "Nurse", Sex.FEMALE)));
+        entities.put("Victor", new Entity(new FullName("Victor", "Sharapov"), new LifeTime(new GregorianCalendar(1965, 2, 24)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-2.jpg", "50 years old ex-military man", Sex.MALE)));
     }
 
     @Test
     public void testCompareTo() throws Exception {
-        System.out.println("testCompareTo");
-        assertEquals(-1, entities.get(0).compareTo(entities.get(1)));
-        assertEquals(1, entities.get(1).compareTo(entities.get(0)));
-        System.out.println("---");
+        assertEquals(1, entities.get("Vitaly1").compareTo(entities.get("Denis")));
+        assertEquals(-1, entities.get("Denis").compareTo(entities.get("Vitaly1")));
     }
 
     @Test
     public void testEquals() throws Exception {
-        System.out.println("testEquals");
-        assertFalse(entities.get(0).equals(entities.get(1)));
-        assertFalse(entities.get(1).equals(entities.get(0)));
+        assertFalse(entities.get("Vitaly1").equals(entities.get("Denis")));
+        assertFalse(entities.get("Denis").equals(entities.get("Vitaly1")));
 
-        assertTrue(entities.get(0).equals(entities.get(2)));
-        assertTrue(entities.get(2).equals(entities.get(0)));
+        assertTrue(entities.get("Vitaly1").equals(entities.get("Vitaly2")));
+        assertTrue(entities.get("Vitaly2").equals(entities.get("Vitaly1")));
 
-        assertFalse(entities.get(2).equals(entities.get(3)));
-        assertFalse(entities.get(3).equals(entities.get(2)));
-        System.out.println("---");
+        assertFalse(entities.get("Vitaly2").equals(entities.get("Vitaly3")));
+        assertFalse(entities.get("Vitaly3").equals(entities.get("Vitaly2")));
     }
 
     @Test
-    public void testAddChild() throws Exception {
-        System.out.println("testAddChild");
-        addChildToParent(entities.get(0), entities.get(1));
-        addChildToParent(entities.get(2), entities.get(1));
-        addChildToParent(entities.get(3), entities.get(1));
-        System.out.println("---");
+    public void testAddChildNormal() throws Exception {
+        addChildToParent(entities.get("Vitaly1"), entities.get("Denis"));
+        addChildToParent(entities.get("Vitaly3"), entities.get("Denis"));
+    }
+
+    @Test(expected = RelativesException.class)
+    public void testAddChildException() throws RelativesException {
+        addChildToParent(entities.get("Vitaly1"), entities.get("Denis"));
+        addChildToParent(entities.get("Vitaly2"), entities.get("Denis"));
     }
 
     @Test
-    public void testAddParent() throws Exception {
-        System.out.println("testAddParent");
-        for (int i = 1; i < entities.size(); i++) {
-            addParentToChild(entities.get(i), entities.get(0));
-        }
-        System.out.println("---");
+    public void testAddParentNormal() throws Exception {
+        addParentToChild(entities.get("Victor"), entities.get("Vitaly1"));
+        addParentToChild(entities.get("Tatjana"), entities.get("Vitaly1"));
+
+        addParentToChild(entities.get("Victor"), entities.get("Denis"));
+        addParentToChild(entities.get("Tatjana"), entities.get("Denis"));
     }
 
-    public void addParentToChild(Entity parent, Entity child) {
-        try {
-            child.addParent(parent);
-            assertTrue(child.getParents().contains(parent));
-        } catch (RelativesException e) {
-            System.out.println(e.getMessage());
-        }
+    @Test(expected = RelativesException.class)
+    public void testAddParentException() throws RelativesException{
+        addParentToChild(entities.get("Victor"), entities.get("Vitaly1"));
+        addParentToChild(entities.get("Denis"), entities.get("Vitaly1"));
     }
 
-    public void addChildToParent(Entity child, Entity parent) {
-        try {
-            parent.addChild(child);
-            assertTrue(parent.getChildren().contains(child));
-        } catch (RelativesException e) {
-            System.out.println(e.getMessage());
-        }
+    public void addParentToChild(Entity parent, Entity child) throws RelativesException {
+        child.addParent(parent);
+        assertTrue(child.getParents().contains(parent));
+    }
+
+    public void addChildToParent(Entity child, Entity parent) throws RelativesException {
+        parent.addChild(child);
+        assertTrue(parent.getChildren().contains(child));
     }
 }
