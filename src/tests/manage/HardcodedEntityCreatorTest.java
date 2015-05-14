@@ -22,7 +22,7 @@ public class HardcodedEntityCreatorTest {
     }
 
     @Test
-    public void testCheckNormal() {
+    public void testCheck() {
         assertFalse(hard.check(hard.retrieve()));
         for (int i = 0; i < cap - 1; i++) {
             assertTrue(hard.check(hard.retrieve()));
