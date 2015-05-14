@@ -1,32 +1,22 @@
 package genealogyTree;
 
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 public class LifeTime {
     private boolean isAlive;
-    private GregorianCalendar birthday;
-    private GregorianCalendar dayOfDeath;
+    private Date birthday;
+    private Date dayOfDeath;
 
-    public LifeTime(GregorianCalendar birthday) {
+    public LifeTime(Date birthday) {
         isAlive = true;
         this.birthday = birthday;
-
-        //For comparing alive entities. Definitely going to be dead by that time.
-        this.dayOfDeath = new GregorianCalendar(3000, 1, 1);
+        this.dayOfDeath = new Date(Long.MAX_VALUE - 1);
     }
 
-    public LifeTime(GregorianCalendar birthday, GregorianCalendar dayOfDeath) {
+    public LifeTime(Date birthday, Date dayOfDeath) {
         isAlive = false;
         this.birthday = birthday;
         this.dayOfDeath = dayOfDeath;
-    }
-
-    public GregorianCalendar getDayOfDeath() {
-        return dayOfDeath;
-    }
-
-    public GregorianCalendar getBirthday() {
-        return birthday;
     }
 
     @Override
@@ -38,5 +28,17 @@ public class LifeTime {
         LifeTime other = (LifeTime) otherObject;
 
         return (this.isAlive == other.isAlive) && this.birthday.equals(other.birthday) && this.dayOfDeath.equals(other.dayOfDeath);
+    }
+
+    public long getBirthday() {
+        return birthday.getTime();
+    }
+
+    public long getDayOfDeath() {
+        return dayOfDeath.getTime();
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 }
