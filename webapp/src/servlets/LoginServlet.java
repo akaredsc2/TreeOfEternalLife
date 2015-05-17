@@ -30,7 +30,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         final String username = request.getParameter("username");
         final String password = request.getParameter("password");
 
-        if(userList.authentiticate(username, password)) {
+        if(userList.authenticate(username, password)) {
             request.setAttribute("username", username);
             getServletContext().getRequestDispatcher("/mypage.jsp").forward(request, response);
         } else {
