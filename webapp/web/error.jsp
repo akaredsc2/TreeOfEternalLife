@@ -4,6 +4,6 @@
     <title></title>
 </head>
 <body>
-    Zdarova, ${username}<br>
+  Now put the gun to your head and pull the fucking trigger!
 </body>
 </html>
