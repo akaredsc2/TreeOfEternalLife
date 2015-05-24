@@ -5,7 +5,6 @@ import exceptions.RelativesException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.TreeMap;
@@ -16,7 +15,7 @@ public class EntityTest {
     private TreeMap<String, Entity> entities;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         entities = new TreeMap<>();
 
         entities.put("Vitaly1", new Entity(new FullName("Vitaly", "Sharapov"), new LifeTime(new GregorianCalendar(1995, 8, 1)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-1.jpg", "I already told you, get lost!", Sex.MALE)));
@@ -28,13 +27,13 @@ public class EntityTest {
     }
 
     @Test
-    public void testCompareTo() throws Exception {
+    public void testCompareTo(){
         assertEquals(1, entities.get("Vitaly1").compareTo(entities.get("Denis")));
         assertEquals(-1, entities.get("Denis").compareTo(entities.get("Vitaly1")));
     }
 
     @Test
-    public void testEquals() throws Exception {
+    public void testEquals(){
         assertFalse(entities.get("Vitaly1").equals(entities.get("Denis")));
         assertFalse(entities.get("Denis").equals(entities.get("Vitaly1")));
 
@@ -46,7 +45,7 @@ public class EntityTest {
     }
 
     @Test
-    public void testAddChildNormal() throws Exception {
+    public void testAddChildNormal() throws RelativesException {
         addChildToParent(entities.get("Vitaly1"), entities.get("Denis"));
         addChildToParent(entities.get("Vitaly3"), entities.get("Denis"));
     }
@@ -58,7 +57,7 @@ public class EntityTest {
     }
 
     @Test
-    public void testAddParentNormal() throws Exception {
+    public void testAddParentNormal() throws RelativesException {
         addParentToChild(entities.get("Victor"), entities.get("Vitaly1"));
         addParentToChild(entities.get("Tatjana"), entities.get("Vitaly1"));
 
