@@ -2,12 +2,21 @@ package genealogyTree;
 
 public class AdditionalInfo {
     private String photoURL;
-    private String shortInfo;
+    private String about;
     private Sex sex;
 
-    public AdditionalInfo(String photoURL, String shortInfo, Sex sex) {
+    @Override
+    public String toString() {
+        return "AdditionalInfo{" +
+                "photoURL='" + photoURL + '\'' +
+                ", about='" + about + '\'' +
+                ", sex=" + sex +
+                '}';
+    }
+
+    public AdditionalInfo(String photoURL, String about, Sex sex) {
         this.photoURL = photoURL;
-        this.shortInfo = shortInfo;
+        this.about = about;
         this.sex = sex;
     }
 

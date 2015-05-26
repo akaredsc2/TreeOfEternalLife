@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Registration</title>
 </head>
 <body>
-    Zdarova, ${username}<br>
+    Registration required
 </body>
 </html>

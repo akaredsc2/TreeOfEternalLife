@@ -1,5 +1,6 @@
 package genealogyTree;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LifeTime {
@@ -30,13 +31,32 @@ public class LifeTime {
     }
 
     @Override
-    public boolean equals(Object otherObject) {
-        if (this == otherObject) return true;
-        if (otherObject == null) return false;
-        if (this.getClass() != otherObject.getClass()) return false;
+    public String toString() {
+        return "LifeTime{" +
+                "isAlive=" + isAlive +
+                ", birthday=" + birthday.get(Calendar.YEAR) + " " + birthday.get(Calendar.MONTH) + " " + birthday.get(Calendar.DAY_OF_MONTH) +
+                ", dayOfDeath=" + dayOfDeath.get(Calendar.YEAR) + " " + dayOfDeath.get(Calendar.MONTH) + " " + birthday.get(Calendar.DAY_OF_WEEK) +
+                '}';
+    }
 
-        LifeTime other = (LifeTime) otherObject;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LifeTime)) return false;
 
-        return (this.isAlive == other.isAlive) && this.birthday.equals(other.birthday) && this.dayOfDeath.equals(other.dayOfDeath);
+        LifeTime lifeTime = (LifeTime) o;
+
+        if (isAlive != lifeTime.isAlive) return false;
+        if (birthday != null ? !birthday.equals(lifeTime.birthday) : lifeTime.birthday != null) return false;
+        return !(dayOfDeath != null ? !dayOfDeath.equals(lifeTime.dayOfDeath) : lifeTime.dayOfDeath != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (isAlive ? 1 : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (dayOfDeath != null ? dayOfDeath.hashCode() : 0);
+        return result;
     }
 }

@@ -3,25 +3,24 @@ package genealogyTree;
 import exceptions.RelativesException;
 
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
-public class Entity implements Comparable<Entity> {
+public class Person implements Comparable<Person> {
     private FullName fullName;
 
     private LifeTime lifeTime;
 
-    private Collection<Entity> parents;
-    private Collection<Entity> children;
+    private Collection<Person> parents;
+    private Collection<Person> children;
 
     private AdditionalInfo info;
 
-    public Entity() {
+    public Person() {
         this.parents = new LinkedList<>();
         this.children = new LinkedList<>();
     }
 
-    public Entity(FullName fullName, LifeTime lifeTime, Collection<Entity> parents, Collection<Entity> children, AdditionalInfo info) {
+    public Person(FullName fullName, LifeTime lifeTime, Collection<Person> parents, Collection<Person> children, AdditionalInfo info) {
         this();
         this.fullName = fullName;
         this.lifeTime = lifeTime;
@@ -30,11 +29,11 @@ public class Entity implements Comparable<Entity> {
         this.info = info;
     }
 
-    public Collection<Entity> getChildren() {
+    public Collection<Person> getChildren() {
         return children;
     }
 
-    public Collection<Entity> getParents() {
+    public Collection<Person> getParents() {
         return parents;
     }
 
@@ -43,7 +42,7 @@ public class Entity implements Comparable<Entity> {
     }
 
     //TODO Advanced comparing e.g. different families can't have same children
-    public void addChild(Entity child) throws RelativesException {
+    public void addChild(Person child) throws RelativesException {
         if (this.equals(child)) {
             throw new RelativesException("A person can't be child to itself!");
         }
@@ -56,7 +55,7 @@ public class Entity implements Comparable<Entity> {
         this.children.add(child);
     }
 
-    public void addParent(Entity parent) throws RelativesException {
+    public void addParent(Person parent) throws RelativesException {
         if (this.equals(parent)) {
             throw new RelativesException("A person can't be parent to itself!");
         }
@@ -71,21 +70,41 @@ public class Entity implements Comparable<Entity> {
     }
 
     @Override
-    public boolean equals(Object otherObject) {
-        if (this == otherObject) return true;
-        if (otherObject == null) return false;
-        if (this.getClass() != otherObject.getClass()) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
 
-        Entity other = (Entity) otherObject;
+        Person person = (Person) o;
 
-        return this.fullName.equals(other.fullName)
-                && this.lifeTime.equals(other.lifeTime)
-                && this.parents.equals(other.parents)
-                && this.children.equals(other.children);
+        if (fullName != null ? !fullName.equals(person.fullName) : person.fullName != null) return false;
+        if (lifeTime != null ? !lifeTime.equals(person.lifeTime) : person.lifeTime != null) return false;
+        if (parents != null ? !parents.equals(person.parents) : person.parents != null) return false;
+        return !(children != null ? !children.equals(person.children) : person.children != null);
+
     }
 
     @Override
-    public int compareTo(Entity other) {
+    public int hashCode() {
+        int result = fullName != null ? fullName.hashCode() : 0;
+        result = 31 * result + (lifeTime != null ? lifeTime.hashCode() : 0);
+        result = 31 * result + (parents != null ? parents.hashCode() : 0);
+        result = 31 * result + (children != null ? children.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public int compareTo(Person other) {
         return this.lifeTime.getBirthday().compareTo(other.lifeTime.getBirthday());
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "fullName=" + fullName +
+                ", lifeTime=" + lifeTime +
+                ", parents=" + parents +
+                ", children=" + children +
+                ", info=" + info +
+                '}';
     }
 }
