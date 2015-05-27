@@ -18,7 +18,7 @@
         <c:forEach var="entry" items="${tree}">
             <tr><td>${entry.value}</td></tr>
         </c:forEach>
-    </tablebo>
+    </table>
 </c:if>
 
 <%--Place for rendered tree--%>
