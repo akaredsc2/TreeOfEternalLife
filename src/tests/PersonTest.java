@@ -1,7 +1,6 @@
-package genealogyTree;
-
 import exceptions.RelativesException;
 
+import genealogyTree.*;
 import org.junit.Before;
 import org.junit.Test;
 

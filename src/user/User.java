@@ -22,7 +22,16 @@ public class User {
         return this.password.equals(password);
     }
 
-    public String getUsername() {
-        return username;
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", tree=" + tree +
+                '}';
+    }
+
+    public GenealogyTree getTree() {
+        return tree;
     }
 }

@@ -1,18 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Person Manager</title>
 </head>
 <body>
-<form method="post" action="creation">
-    Zdarova, ${username}<br>
-    <a href="home.jsp">home</a>
-
-    <%--Logout--%>
+<%--Logout--%>
+<c:if test="${!empty sessionScope.username}">
     <form method="post" action="login_servlet">
+        Hello, ${username}!<br>
         <input type="hidden" name="command" value="logout">
         <input type="submit" value="Logout"/>
     </form>
+    <br/>
+</c:if>
+
+<%--Navigation--%>
+<a href="<c:url value="/home.jsp"/>">Home</a>
+<a href="<c:url value="/tree.jsp"/>">Draw tree</a>
+
+<form method="post" action="creation">
 
     <%--FullName--%>
     <label for="name">Name</label>
@@ -39,12 +46,12 @@
     <hr/>
     <%--Parents--%>
 
-    Parent placeholder
-    <hr/>
+    Parents placeholder
     <%--Children--%>
 
     Children placeholder
     <hr/>
+
     <%--AdditionalInfo--%>
     <label for="info-box">Additional information</label> <br/>
     <input type="checkbox" id="info-box" name="info-box" checked/><br/>

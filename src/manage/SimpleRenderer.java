@@ -29,7 +29,7 @@ public class SimpleRenderer {
     }
 }
 
-//TODO Person class: isDrawn indicator
-//TODO Advanced authorization with sessions
-//TODO Creation factory
 //TODO Dropdown menus in creation
+//todo remove/modify record
+//todo render as table for now
+//todo hardcode example

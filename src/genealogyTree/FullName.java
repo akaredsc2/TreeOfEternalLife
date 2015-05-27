@@ -35,4 +35,8 @@ public class FullName {
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         return result;
     }
+
+    public String getName() {
+        return name;
+    }
 }

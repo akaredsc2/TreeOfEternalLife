@@ -1,8 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Error</title>
+    <title></title>
 </head>
 <body>
 <%--Logout--%>
@@ -13,7 +13,16 @@
         <input type="submit" value="Logout"/>
     </form>
     <br/>
+
+    <table>
+        <c:forEach var="entry" items="${tree}">
+            <tr><td>${entry.value}</td></tr>
+        </c:forEach>
+    </table>
 </c:if>
-<h1>Something went terribly wrong!</h1>
+
+<%--Place for rendered tree--%>
+<a href="<c:url value="/manage.jsp"/>">Manage tree</a>
+<a href="<c:url value="/home.jsp"/>">Home</a>
 </body>
 </html>

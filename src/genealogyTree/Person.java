@@ -10,6 +10,10 @@ public class Person implements Comparable<Person> {
 
     private LifeTime lifeTime;
 
+    public FullName getFullName() {
+        return fullName;
+    }
+
     private Collection<Person> parents;
     private Collection<Person> children;
 

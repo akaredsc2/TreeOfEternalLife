@@ -20,4 +20,8 @@ public class HardcodedUserList {
     public boolean authenticate(String user, String password) {
         return isReal(user) && allUsers.get(user).comparePassword(password);
     }
+
+    public User getByUsername(String username) {
+        return allUsers.get(username);
+    }
 }

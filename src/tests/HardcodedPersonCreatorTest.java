@@ -1,7 +1,6 @@
-package manage;
-
 import static org.junit.Assert.*;
 
+import manage.HardcodedPersonCreator;
 import org.junit.Before;
 import org.junit.Test;
 
