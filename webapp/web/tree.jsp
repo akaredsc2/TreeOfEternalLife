@@ -14,11 +14,11 @@
     </form>
     <br/>
 
-    <table>
+    <table border="1">
         <c:forEach var="entry" items="${tree}">
             <tr><td>${entry.value}</td></tr>
         </c:forEach>
-    </table>
+    </tablebo>
 </c:if>
 
 <%--Place for rendered tree--%>
