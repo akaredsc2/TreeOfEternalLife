@@ -10,10 +10,6 @@ public class Person implements Comparable<Person> {
 
     private LifeTime lifeTime;
 
-    public FullName getFullName() {
-        return fullName;
-    }
-
     private Collection<Person> parents;
     private Collection<Person> children;
 
@@ -65,8 +61,10 @@ public class Person implements Comparable<Person> {
         }
         if (this.parents.size() >= 2) {
             throw new RelativesException("This person already has 2 parents!");
+
+            //TODO try to remove iterator
         } else if (!this.parents.isEmpty() && this.parents.iterator().next().info.getSex() == parent.info.getSex()) {
-            throw new RelativesException("WE ARE NOT TOLERANT!");
+            throw new RelativesException("Parents sex must be different!");
         } else if (this.compareTo(parent) <= 0 ) {
             throw new RelativesException("Parent is younger than child!");
         }
@@ -74,41 +72,21 @@ public class Person implements Comparable<Person> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Person)) return false;
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) return true;
+        if (otherObject == null) return false;
+        if (this.getClass() != otherObject.getClass()) return false;
 
-        Person person = (Person) o;
+        Person other = (Person) otherObject;
 
-        if (fullName != null ? !fullName.equals(person.fullName) : person.fullName != null) return false;
-        if (lifeTime != null ? !lifeTime.equals(person.lifeTime) : person.lifeTime != null) return false;
-        if (parents != null ? !parents.equals(person.parents) : person.parents != null) return false;
-        return !(children != null ? !children.equals(person.children) : person.children != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = fullName != null ? fullName.hashCode() : 0;
-        result = 31 * result + (lifeTime != null ? lifeTime.hashCode() : 0);
-        result = 31 * result + (parents != null ? parents.hashCode() : 0);
-        result = 31 * result + (children != null ? children.hashCode() : 0);
-        return result;
+        return this.fullName.equals(other.fullName)
+                && this.lifeTime.equals(other.lifeTime)
+                && this.parents.equals(other.parents)
+                && this.children.equals(other.children);
     }
 
     @Override
     public int compareTo(Person other) {
         return this.lifeTime.getBirthday().compareTo(other.lifeTime.getBirthday());
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "fullName=" + fullName +
-                ", lifeTime=" + lifeTime +
-                ", parents=" + parents +
-                ", children=" + children +
-                ", info=" + info +
-                '}';
     }
 }
