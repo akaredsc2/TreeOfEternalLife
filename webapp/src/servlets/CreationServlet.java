@@ -41,9 +41,6 @@ public class CreationServlet extends HttpServlet {
 
             request.getSession().setAttribute("tree", user.getTree().getLeafs());//refactor mb? Definitely temp solution
 
-            //todo remove it the fuck out!
-            System.out.println(user.getTree());
-
             getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
         } else {
             getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);

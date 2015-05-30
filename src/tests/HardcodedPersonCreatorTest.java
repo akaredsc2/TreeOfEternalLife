@@ -1,11 +1,11 @@
-import manage.HardcodedEntityCreator;
+import static org.junit.Assert.*;
+
+import manage.HardcodedPersonCreator;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class HardcodedPersonCreatorTest {
-    private final HardcodedEntityCreator hard = new HardcodedEntityCreator();
+    private final HardcodedPersonCreator hard = new HardcodedPersonCreator();
     private int cap;
 
     @Before

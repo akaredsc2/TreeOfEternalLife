@@ -6,14 +6,14 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class HardcodedEntityCreator implements EntityManager {
+public class HardcodedPersonCreator implements PersonManager {
     private Queue<Person> entities;
 
     //TODO make it access database
     //auth from servlet or something
     //java ee tutorial servlets
 
-    public HardcodedEntityCreator() {
+    public HardcodedPersonCreator() {
         this.entities = new LinkedList<>();
 
         entities.add(new Person(new FullName("Dons", "Kihots"), new LifeTime(new GregorianCalendar(1605, 5, 19), new GregorianCalendar(1505, 5, 19)), new LinkedList<>(), new LinkedList<>(), new AdditionalInfo("images/Untitled-3.jpg", "almost two years old child", Sex.FEMALE)));
@@ -27,7 +27,7 @@ public class HardcodedEntityCreator implements EntityManager {
         return entities;
     }
 
-    //TODO Get data from web form
+    //TODO Get data from web app
     @Override
     public Person retrieve() {
         if (entities.isEmpty()) {
