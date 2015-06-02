@@ -30,12 +30,8 @@ public class RegistrationServlet extends HttpServlet {
         final String password2 = request.getParameter("password2");
 
         if (!password1.equals(password2)) {
-            System.out.println("password mismatch");
-
             getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
         } else {
-
-            //Connecting to database
             Class.forName("com.mysql.jdbc.Driver");
 
             try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tree", "root", "1234")) {
@@ -46,12 +42,8 @@ public class RegistrationServlet extends HttpServlet {
                         if (!resultSet.next()) {
                             statement.executeUpdate("INSERT INTO users VALUES ('" + username + "', '" + password1 + "');");
 
-                            System.out.println("Yes, it's perfect, yes!");
-
                             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                         } else {
-                            System.out.println("Already registered login");
-
                             getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
                         }
                     }

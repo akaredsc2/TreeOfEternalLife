@@ -18,6 +18,19 @@ public class User {
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public GenealogyTree getTree() {
+        return tree;
+    }
+
+    //todo clean up!
     public boolean comparePassword(String password) {
         return this.password.equals(password);
     }
@@ -29,9 +42,5 @@ public class User {
                 ", password='" + password + '\'' +
                 ", tree=" + tree +
                 '}';
-    }
-
-    public GenealogyTree getTree() {
-        return tree;
     }
 }

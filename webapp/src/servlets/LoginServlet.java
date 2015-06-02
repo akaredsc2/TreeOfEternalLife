@@ -1,6 +1,7 @@
 package servlets;
 
-import user.HardcodedUserList;
+import user.User;
+import user.UserManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,25 +10,33 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginServlet extends javax.servlet.http.HttpServlet {
-    private HardcodedUserList userList;
+    private UserManager userManager;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        this.userList = new HardcodedUserList();
+        this.userManager = new UserManager();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
+        try {
+            process(request, response);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        process(request, response);
+        try {
+            process(request, response);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         String command = request.getParameter("command");
 
         switch (command) {
@@ -35,9 +44,12 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
 
-                if (userList.authenticate(username, password)) {
+                User potentialUser = new User(username, password);
+
+                if (userManager.authenticate(potentialUser)) {
                     HttpSession session = request.getSession();
 
+                    //todo put full user into session mb?
                     session.setAttribute("username", username);
                     getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
                 } else {
