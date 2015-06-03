@@ -23,4 +23,31 @@ public class UserManager {
         }
         return false;
     }
+
+    public User getByName(String username) throws ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tree", "root", "1234")) {
+            if (connection != null) {
+                Statement statement = connection.createStatement();
+
+                try (ResultSet resultSet = statement.executeQuery("SELECT * FROM tree.users WHERE username='" + username + "';")) {
+                    if (resultSet.next()) {
+                        User user = new User(resultSet.getString("username"), resultSet.getString("password"));
+
+
+                        //Yeah, looks awesome.
+                        user.getTree().retrieveTree(user.getUsername());
+
+                        return user;
+                    }
+                }
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

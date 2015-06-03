@@ -3,7 +3,7 @@ package manage;
 import genealogyTree.Person;
 
 public interface PersonManager {
-    Person retrieve();
+    Person retrieve(String name) throws ClassNotFoundException;
 
     boolean check(Person person);
 

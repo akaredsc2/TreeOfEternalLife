@@ -27,14 +27,9 @@ public class HardcodedPersonCreator implements PersonManager {
         return entities;
     }
 
-    //TODO Get data from web app
     @Override
-    public Person retrieve() {
-        if (entities.isEmpty()) {
-            return null;
-        } else {
-            return entities.poll();
-        }
+    public Person retrieve(String name) throws ClassNotFoundException {
+        return null;
     }
 
     @Override
@@ -44,7 +39,12 @@ public class HardcodedPersonCreator implements PersonManager {
 
     @Override
     public Person create() {
-        Person person = retrieve();
+        Person person = null;
+        try {
+            person = retrieve("random");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         if (check(person)) {
             return person;

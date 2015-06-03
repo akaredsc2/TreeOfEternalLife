@@ -30,7 +30,6 @@ public class User {
         return tree;
     }
 
-    //todo clean up!
     public boolean comparePassword(String password) {
         return this.password.equals(password);
     }

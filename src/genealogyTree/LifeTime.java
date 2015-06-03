@@ -22,12 +22,24 @@ public class LifeTime {
         this.dayOfDeath = dayOfDeath;
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     public GregorianCalendar getDayOfDeath() {
         return dayOfDeath;
     }
 
     public GregorianCalendar getBirthday() {
         return birthday;
+    }
+
+    public String getBirthdayString() {
+        return birthday.get(Calendar.YEAR) + "-" + birthday.get(Calendar.MONTH) + "-" + birthday.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public String getDayOfDeathString() {
+        return dayOfDeath.get(Calendar.YEAR) + "-" + dayOfDeath.get(Calendar.MONTH) + "-" + dayOfDeath.get(Calendar.DAY_OF_MONTH);
     }
 
     @Override

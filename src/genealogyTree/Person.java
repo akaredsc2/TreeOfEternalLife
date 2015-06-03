@@ -2,6 +2,7 @@ package genealogyTree;
 
 import exceptions.RelativesException;
 
+import java.sql.*;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -10,13 +11,9 @@ public class Person implements Comparable<Person> {
 
     private LifeTime lifeTime;
 
-    public FullName getFullName() {
-        return fullName;
-    }
-
     private Collection<Person> parents;
-    private Collection<Person> children;
 
+    private Collection<Person> children;
     private AdditionalInfo info;
 
     public Person() {
@@ -33,19 +30,22 @@ public class Person implements Comparable<Person> {
         this.info = info;
     }
 
-    public Collection<Person> getChildren() {
-        return children;
-    }
-
-    public Collection<Person> getParents() {
-        return parents;
+    public FullName getFullName() {
+        return fullName;
     }
 
     public LifeTime getLifeTime() {
         return lifeTime;
     }
 
-    //TODO Advanced comparing e.g. different families can't have same children
+    public Collection<Person> getParents() {
+        return parents;
+    }
+
+    public Collection<Person> getChildren() {
+        return children;
+    }
+
     public void addChild(Person child) throws RelativesException {
         if (this.equals(child)) {
             throw new RelativesException("A person can't be child to itself!");
@@ -67,10 +67,47 @@ public class Person implements Comparable<Person> {
             throw new RelativesException("This person already has 2 parents!");
         } else if (!this.parents.isEmpty() && this.parents.iterator().next().info.getSex() == parent.info.getSex()) {
             throw new RelativesException("WE ARE NOT TOLERANT!");
-        } else if (this.compareTo(parent) <= 0 ) {
+        } else if (this.compareTo(parent) <= 0) {
             throw new RelativesException("Parent is younger than child!");
         }
         this.parents.add(parent);
+    }
+
+    public void addToUser(String username) throws ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tree", "root", "1234")) {
+            if (connection != null) {
+                Statement statement = connection.createStatement();
+
+                try (ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE username = '" + username + "';")) {
+                    if (resultSet.next()) {
+                        int userID = resultSet.getInt("user_id");
+
+                        if (lifeTime.isAlive()) {
+                            statement.executeUpdate("INSERT INTO tree.persons (person_name, person_surname, user_id, person_birth, person_photo, person_about, person_sex) VALUES ('"
+                                    + fullName.getName() + "', '" + fullName.getSurname() + "', '"
+                                    + userID + "', '"
+                                    + lifeTime.getBirthdayString() + "', '"
+                                    + info.getPhotoURL() + "', '" + info.getAbout() + "', '" + info.getSex().name() + "'   )");
+                        } else {
+                            statement.executeUpdate("INSERT INTO tree.persons (person_name, person_surname, user_id, person_birth, person_death, person_photo, person_about, person_sex) VALUES ('"
+                                    + fullName.getName() + "', '" + fullName.getSurname() + "', '"
+                                    + userID + "', '"
+                                    + lifeTime.getBirthdayString() + "', '" + lifeTime.getDayOfDeathString() + "', '"
+                                    + info.getPhotoURL() + "', '" + info.getAbout() + "', '" + info.getSex().name() + "'   )");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        return this.lifeTime.getBirthday().compareTo(other.lifeTime.getBirthday());
     }
 
     @Override
@@ -94,11 +131,6 @@ public class Person implements Comparable<Person> {
         result = 31 * result + (parents != null ? parents.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public int compareTo(Person other) {
-        return this.lifeTime.getBirthday().compareTo(other.lifeTime.getBirthday());
     }
 
     @Override

@@ -5,6 +5,18 @@ public class AdditionalInfo {
     private String about;
     private Sex sex;
 
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
     @Override
     public String toString() {
         return "AdditionalInfo{" +
@@ -18,9 +30,5 @@ public class AdditionalInfo {
         this.photoURL = photoURL;
         this.about = about;
         this.sex = sex;
-    }
-
-    public Sex getSex() {
-        return sex;
     }
 }

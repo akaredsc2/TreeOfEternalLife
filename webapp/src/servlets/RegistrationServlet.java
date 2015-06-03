@@ -40,7 +40,7 @@ public class RegistrationServlet extends HttpServlet {
 
                     try (ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE username = '" + username + "';")) {
                         if (!resultSet.next()) {
-                            statement.executeUpdate("INSERT INTO users VALUES ('" + username + "', '" + password1 + "');");
+                            statement.executeUpdate("INSERT INTO users (username, password) VALUES ('" + username + "', '" + password1 + "');");
 
                             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                         } else {
